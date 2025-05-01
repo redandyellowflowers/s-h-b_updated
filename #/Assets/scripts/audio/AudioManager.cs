@@ -59,6 +59,18 @@ public class AudioManager : MonoBehaviour
             return;
     }
 
+    public void PlayForButton(string name)//string name will find sound with appropriate name
+    {
+        Sound s = Array.Find(sounds, sound => sound.name == name);
+        s.source.PlayOneShot(s.clip, 1f);
+
+        if (s == null)
+        {
+            Debug.Log("sound" + name + "is missing");
+        }
+        return;
+    }
+
     public void Stop(string name)
     {
         Sound s = Array.Find(sounds, sound => sound.name == name);//all this is doing is fingint the sound by the name given

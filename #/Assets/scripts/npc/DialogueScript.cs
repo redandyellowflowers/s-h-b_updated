@@ -71,7 +71,7 @@ public class DialogueScript : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.E) && isDoneTalking)
             {
                 MovementScript.moveSpeed = 0f;
-                cam.yOffset = 3f;
+                cam.yOffset = -3f;
 
                 textBox.SetActive(true);
                 dialogueText.text = npcName + " : " + "";

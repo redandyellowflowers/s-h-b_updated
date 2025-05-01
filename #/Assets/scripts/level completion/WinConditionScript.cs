@@ -4,7 +4,10 @@ using UnityEngine.Rendering;
 
 public class WinConditionScript : MonoBehaviour
 {
+    public string completionPrompt = "leave";//to be displayed once all enemies have been killed
+
     public TextMeshProUGUI enemyCount;
+
     public GameObject endTrigger;
 
     GameObject obstruction;
@@ -25,13 +28,14 @@ public class WinConditionScript : MonoBehaviour
 
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
         int numberOfEnemies = enemies.Length;
-        enemyCount.text = enemies.Length.ToString();
+        enemyCount.text = "enemies = " + enemies.Length.ToString();
 
-        if (numberOfEnemies == 0)
+        if (numberOfEnemies <= 0)
         {
-            numberOfEnemies = 0;
-            enemyCount.text = "leave this <#FF0000>place</color>!".ToString();
-            //FindAnyObjectByType<AudioManager>().Stop("background");
+            enemyCount.text = completionPrompt.ToString();
+
+            FindAnyObjectByType<AudioManager>().Stop("background");//REFERENCING AUDIO MANAGER
+
             if (endTrigger != null)
             {
                 endTrigger.SetActive(true);

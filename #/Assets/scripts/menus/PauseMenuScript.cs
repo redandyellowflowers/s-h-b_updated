@@ -18,6 +18,11 @@ public class PauseMenuScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (player == null)
+        {
+            gameObject.GetComponent<PauseMenuScript>().enabled = false;
+        }
+
         if (Input.GetKeyDown(KeyCode.Escape) && gameIsPaused == false)
         {
             pauseGame();

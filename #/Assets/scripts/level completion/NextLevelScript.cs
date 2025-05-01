@@ -4,8 +4,8 @@ using UnityEngine.UI;
 
 public class NextLevelScript : MonoBehaviour
 {
-    public GameObject pressInteractText;
-    public GameObject levelCompleteUi;
+    //public GameObject pressInteractText;
+    //public GameObject levelCompleteUi;
 
     //'serializedfield' means that these are still private, but are now accessable in the editor >> removed the variables, but still good to know
 
@@ -13,16 +13,16 @@ public class NextLevelScript : MonoBehaviour
     {
         gameObject.SetActive(false);
 
-        pressInteractText = GameObject.Find("finish level button");
-        pressInteractText.SetActive(false);
+        //pressInteractText = GameObject.Find("finish level button");
+        //pressInteractText.SetActive(false);
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        levelCompleteUi.SetActive(false);
+        //levelCompleteUi.SetActive(false);
 
-        FindAnyObjectByType<AudioManager>().Play("enemies are dead");
+        FindAnyObjectByType<AudioManager>().Play("enemies are dead");//REFERENCING AUDIO MANAGER
     }
 
     // Update is called once per frame
@@ -33,7 +33,7 @@ public class NextLevelScript : MonoBehaviour
 
     public void OnTriggerStay2D(Collider2D collision)
     {
-        pressInteractText.SetActive(true);
+        //pressInteractText.SetActive(true);
 
         if (collision.gameObject.tag == "Player" && Input.GetKey(KeyCode.E))
         {
@@ -43,15 +43,17 @@ public class NextLevelScript : MonoBehaviour
 
     public void InteractToWin()
     {
-        levelCompleteUi.SetActive(true);
+        //levelCompleteUi.SetActive(true);
         Time.timeScale = 0f;
     }
 
     public void OnTriggerExit2D(Collider2D collision)
     {
+        /*
         if (pressInteractText != null)
         {
             pressInteractText.SetActive(false);
         }
+        */
     }
 }
