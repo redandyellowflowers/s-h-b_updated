@@ -52,13 +52,16 @@ public class NpcScript : MonoBehaviour
 
     public void FixedUpdate()//used primarily when dealing with physics
     {
-        distance = Vector2.Distance(transform.position, player.transform.position);
-
-        if (distance < detectionRadius && hasLineOfSight && player != null)//if the object has line of sight of the player, then they look, otherwise, theyre static
+        if (player != null)
         {
-            Vector2 lookDirection = playerPos - rigidBody.position;
-            float angle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg - 90f;
-            rigidBody.rotation = angle;
+            distance = Vector2.Distance(transform.position, player.transform.position);
+
+            if (distance < detectionRadius && hasLineOfSight && player != null)//if the object has line of sight of the player, then they look, otherwise, theyre static
+            {
+                Vector2 lookDirection = playerPos - rigidBody.position;
+                float angle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg - 90f;
+                rigidBody.rotation = angle;
+            }
         }
     }
 

@@ -3,6 +3,8 @@ using UnityEngine;
 public class EnemyBulletScript : MonoBehaviour
 {
     public int bullletDamage = 5;
+    public GameObject impactEffect;
+    public GameObject bloodImpactEffect;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -22,11 +24,13 @@ public class EnemyBulletScript : MonoBehaviour
         {
             FindAnyObjectByType<AudioManager>().Play("impact");//REFERENCING AUDIO MANAGER
 
+            GameObject impactGameobject = Instantiate(bloodImpactEffect, collision.transform.position, Quaternion.LookRotation(collision.transform.up));
+            Destroy(impactGameobject, 2f);
+
             PlayerHealthScript playerHP = collision.GetComponent<PlayerHealthScript>();
             playerHP.TakeDamage(bullletDamage);
             Destroy(gameObject);
         }
-
-        Destroy(gameObject);
+            Destroy(gameObject);
     }
 }

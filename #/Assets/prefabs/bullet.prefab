@@ -111,7 +111,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85dcbb7e7b1e9cd42a243c1a8b32d2a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bullletDamage: 35
+  bullletDamage: 2
+  impactEffect: {fileID: 6598884645010098442, guid: d4995410029317d48a5ed935ba381cba, type: 3}
+  bloodImpactEffect: {fileID: 6598884645010098442, guid: caba089e699a29e4cbdcc11d7c1740a6, type: 3}
 --- !u!96 &3511261334972364123
 TrailRenderer:
   serializedVersion: 3
@@ -136,7 +138,7 @@ TrailRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -876546973899608171, guid: a3d800b099a06e0478fb790c5e79057a, type: 3}
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -167,7 +169,7 @@ TrailRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.44827652
+        value: 0.20514297
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -175,7 +177,7 @@ TrailRenderer:
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 0.23831779
+        time: 0.49363548
         value: 0
         inSlope: 0
         outSlope: 0
@@ -188,8 +190,8 @@ TrailRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 1, b: 1, a: 1}
-      key1: {r: 1, g: 1, b: 1, a: 1}
+      key0: {r: 1, g: 0.6847967, b: 0, a: 1}
+      key1: {r: 1, g: 0, b: 0, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
@@ -213,7 +215,7 @@ TrailRenderer:
       atime6: 0
       atime7: 0
       m_Mode: 0
-      m_ColorSpace: -1
+      m_ColorSpace: 0
       m_NumColorKeys: 2
       m_NumAlphaKeys: 2
     numCornerVertices: 0

@@ -137,7 +137,7 @@ public class PlayerControllerScript : MonoBehaviour
                 currentStamina = 0;
                 Time.timeScale = 1f;
 
-                PlayerLight.pointLightOuterRadius = 20;
+                PlayerLight.pointLightOuterRadius = 10;
                 PlayerLight.color = Color.white;
             }
 
@@ -153,7 +153,7 @@ public class PlayerControllerScript : MonoBehaviour
 
             Time.timeScale = 1f;
 
-            PlayerLight.pointLightOuterRadius = 20;
+            PlayerLight.pointLightOuterRadius = 10;
             PlayerLight.color = Color.white;
 
             currentStamina += slowMoRate;

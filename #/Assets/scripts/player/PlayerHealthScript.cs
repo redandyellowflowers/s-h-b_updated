@@ -16,8 +16,9 @@ public class PlayerHealthScript : MonoBehaviour
 
     [Header("gameObjects")]
     public GameObject impactEffect;
+    public GameObject deathParticleEffect;
     //public GameObject damageScreenUI;
-    //public GameObject gameOverUI;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -32,28 +33,12 @@ public class PlayerHealthScript : MonoBehaviour
     void Update()
     {
         /*
-        
-        //THIS ENTIRE PORTION HAS TO DO WITH THE DAMAGE SCREEN, AND GAMEOVER SCREENS**********
-
         if (currentHealth < lowHealthAlert)
         {
             damageScreenUI.SetActive(true);
         }
         else
             damageScreenUI.SetActive(false);
-
-        if (currentHealth <= 0)
-        {
-            gameOverUI.SetActive(true);
-            damageScreenUI.SetActive(false);
-
-            Time.timeScale = 0f;
-
-            if (Input.GetKey(KeyCode.Backspace))
-            {
-                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-            }
-        }
         */
     }
 
@@ -63,14 +48,19 @@ public class PlayerHealthScript : MonoBehaviour
 
         healthBar.value = currentHealth;
         //healthText.text = currentHealth + "/" + maxHealth.ToString();
-        print("Enemy Damage " + currentHealth);
+        //print("Enemy Damage " + currentHealth);
 
         GameObject impactGameobject = Instantiate(impactEffect, gameObject.transform.position, Quaternion.Euler(0, 0, Random.Range(0, 360)));
         Destroy(impactGameobject, 3f);
 
         if (currentHealth <= 0)
         {
-            //ADD AN ADDITIONAL INSTANTIATE FOR THE PLAYERS DEATH
+            FindAnyObjectByType<AudioManager>().Play("enemy death");//REFERENCING AUDIO MANAGER
+
+            GameObject BloodExplosion = Instantiate(deathParticleEffect, gameObject.transform.position, Quaternion.Euler(0, 0, Random.Range(0, 360)));
+            Destroy(BloodExplosion, 1f);
+            //damageScreenUI.SetActive(false);
+
             Destroy(gameObject);
         }
     }

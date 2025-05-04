@@ -2,7 +2,8 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEngine.GraphicsBuffer;
+using EZCameraShake;
+using UnityEditor.PackageManager;
 
 public class PlayerShootingScript : MonoBehaviour
 {
@@ -12,20 +13,32 @@ public class PlayerShootingScript : MonoBehaviour
     public int damage = 5;
     public float range = 15f;
 
+    private float nextTimeToFire = 0f;
+    public float fireRate = 1f;
+
+    public bool Reloadable;
+
     [Header("UI")]
     public TextMeshProUGUI ammoCountText;
 
     [Header("gameObjects")]
     public GameObject firePoint;
     public LineRenderer lineRenderer;
+    public GameObject impactEffect;
+    public GameObject bloodImpactEffect;
+    public ParticleSystem muzzleflash;
+    public Animator anim;
 
     private bool hasLineOfSight = false;
+    private bool isShooting = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         ammoCountText.text = currentAmmo + "/" + maxAmmo.ToString();
         currentAmmo = maxAmmo;
+
+        anim = gameObject.GetComponentInChildren<Animator>();
     }
 
     // Update is called once per frame
@@ -37,32 +50,46 @@ public class PlayerShootingScript : MonoBehaviour
 
     public void Shoot()
     {
+        isShooting = false;
 
-        if (Input.GetKeyDown(KeyCode.Mouse0))
+        if (Input.GetKey(KeyCode.Mouse0))
         {
-            currentAmmo -= 1;
 
-            FindAnyObjectByType<AudioManager>().Play("shoot");//REFERENCING AUDIO MANAGER
-
-            print("Ammo count " + currentAmmo);
-            ammoCountText.text = currentAmmo + "/" + maxAmmo.ToString();
-
-            if (currentAmmo <= 0)
+            if (Time.time >= nextTimeToFire)
             {
-                currentAmmo = 0;
-                ammoCountText.text = "reload";
+                nextTimeToFire = Time.time + 1f / fireRate;//adds a bit of delay before the enemy fires (by dividing 1 by the fire rate and adding that to the time.time, which is the current "game" time) as for them to not gun down the player in seconds
 
-                FindAnyObjectByType<AudioManager>().Stop("shoot");//REFERENCING AUDIO MANAGER
-                FindAnyObjectByType<AudioManager>().Play("empty");//REFERENCING AUDIO MANAGER
+                StartCoroutine(targetRays());
 
-                print("out of ammo");
+                isShooting = true;
+                //camerashake
+                CameraShaker.Instance.ShakeOnce(3f, 1f, .1f, .4f);
+                MuzzleFlash();
 
-                //POTENTIAL RELOAD PROMPT ENABLING GOES HERE*****
-                lineRenderer.gameObject.SetActive(false);
+                currentAmmo -= 1;
+
+                FindAnyObjectByType<AudioManager>().Play("shoot");//REFERENCING AUDIO MANAGER
+
+                //print("Ammo count " + currentAmmo);
+                ammoCountText.text = currentAmmo + "/" + maxAmmo.ToString();
+
+                if (currentAmmo <= 0)
+                {
+                    isShooting = false;
+
+                    currentAmmo = 0;
+                    ammoCountText.text = "reload".ToString();
+
+                    FindAnyObjectByType<AudioManager>().Stop("shoot");//REFERENCING AUDIO MANAGER
+                    FindAnyObjectByType<AudioManager>().Play("empty");//REFERENCING AUDIO MANAGER
+
+                    //print("out of ammo");
+
+                    lineRenderer.gameObject.SetActive(false);
+                }
             }
-
-            StartCoroutine(targetRays());
         }
+        anim.SetBool("isShooting", isShooting);
     }
 
     public IEnumerator targetRays()//as i understand it, IEnumerators allow for timers, or other such functions, and is convenient for that
@@ -83,8 +110,13 @@ public class PlayerShootingScript : MonoBehaviour
 
                 lineRenderer.SetPosition(0, firePoint.transform.position);
                 lineRenderer.SetPosition(1, ray.point);
-                lineRenderer.material.SetColor("_Color", Color.red);
+                //lineRenderer.material.SetColor("_Color", Color.red);
 
+                if (currentAmmo != 0)
+                {
+                    GameObject impactGameobject = Instantiate(bloodImpactEffect, ray.point, Quaternion.LookRotation(ray.normal));
+                    Destroy(impactGameobject, 2f);
+                }
             }
             else
             {
@@ -92,7 +124,13 @@ public class PlayerShootingScript : MonoBehaviour
 
                 lineRenderer.SetPosition(0, firePoint.transform.position);
                 lineRenderer.SetPosition(1, ray.point);
-                lineRenderer.material.SetColor("_Color", Color.white);
+                //lineRenderer.material.SetColor("_Color", Color.white);
+
+                if (currentAmmo != 0)
+                {
+                    GameObject impactGameobject = Instantiate(impactEffect, ray.point, Quaternion.LookRotation(ray.normal));
+                    Destroy(impactGameobject, 2f);
+                }
             }
 
             lineRenderer.enabled = true;
@@ -110,10 +148,18 @@ public class PlayerShootingScript : MonoBehaviour
         }
     }
 
+
+    public void MuzzleFlash()
+    {
+        muzzleflash.Emit(30);
+    }
+
     public void Reload()
     {
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Reloadable == true && Input.GetKeyDown(KeyCode.R))
         {
+            isShooting = false;
+
             if (currentAmmo < maxAmmo)
             {
                 FindAnyObjectByType<AudioManager>().Play("reload");//REFERENCING AUDIO MANAGER
@@ -122,7 +168,6 @@ public class PlayerShootingScript : MonoBehaviour
             currentAmmo = maxAmmo;
             ammoCountText.text = currentAmmo + "/" + maxAmmo.ToString();
 
-            //POTENTIAL RELOAD PROMPT DISABLING GOES HERE*****
             lineRenderer.gameObject.SetActive(true);
         }
     }

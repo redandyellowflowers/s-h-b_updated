@@ -129,6 +129,7 @@ public class DialogueScript : MonoBehaviour
         foreach (char character in sentences[index].ToCharArray())
         {
             dialogueText.text += character;
+            //FindAnyObjectByType<AudioManager>().PlayForButton("typing");//REFERENCING AUDIO MANAGER
             yield return new WaitForSeconds(dialogueSpeed);
 
             isDoneTalking = false;

@@ -1,9 +1,14 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class SceneManagerScript : MonoBehaviour
 {
     public static SceneManagerScript sceneManager;//in this case, static means youve made the accessable within other scripts, but wont show in the inspector
+    public GameObject loadingScreen;
+    public Slider slider;
+
 
     /*
     void Awake()//awake is called before start, and is most usefull in this case, for setting up references to other scripts as its called before the start method
@@ -33,17 +38,65 @@ public class SceneManagerScript : MonoBehaviour
 
     public void NextLevel()
     {
-        SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex + 1);//youre getting the scene after the current scene as ordered in the build index
+        StartCoroutine(LoadNextLevelAsynchronously());
+    }
+
+    IEnumerator LoadNextLevelAsynchronously()
+    {
+        AsyncOperation operation = SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex + 1);
+
+        loadingScreen.SetActive(true);
+
+        while (operation.isDone == false)
+        {
+            float progress = Mathf.Clamp01(operation.progress / .9f);
+
+            slider.value = progress;
+
+            yield return null;
+        }
     }
 
     public void LoadScene(string sceneName)
     {
-        SceneManager.LoadSceneAsync(sceneName);
+        StartCoroutine(LoadSceneAsynchronously(sceneName));
+    }
+
+    IEnumerator LoadSceneAsynchronously(string sceneName)
+    {
+        AsyncOperation operation = SceneManager.LoadSceneAsync(sceneName);
+
+        loadingScreen.SetActive(true);
+
+        while (operation.isDone == false)
+        {
+            float progress = Mathf.Clamp01(operation.progress / .9f);
+
+            slider.value = progress;
+
+            yield return null;
+        }
     }
 
     public void restart()
     {
-        SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().name);
+        StartCoroutine(LoadActiveSceneAsynchronously());
+    }
+
+    IEnumerator LoadActiveSceneAsynchronously()
+    {
+        AsyncOperation operation = SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().name);
+
+        loadingScreen.SetActive(true);
+
+        while (operation.isDone == false)
+        {
+            float progress = Mathf.Clamp01(operation.progress / .9f);
+
+            slider.value = progress;
+
+            yield return null;
+        }
     }
 
     public void quitGame()
