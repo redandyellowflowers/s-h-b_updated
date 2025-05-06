@@ -43,8 +43,8 @@ Material:
     - _scale: -0.4
     - _starttime: 50
     m_Colors:
-    - _basecolour: {r: 0.3584906, g: 0.05902047, b: 0.05614095, a: 0}
-    - _hightlighs_colour: {r: 1, g: 1, b: 1, a: 0}
+    - _basecolour: {r: 0.022405662, g: 0.0036887794, b: 0.0035088095, a: 0}
+    - _hightlighs_colour: {r: 0.25, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
 --- !u!114 &2410478341595252961
