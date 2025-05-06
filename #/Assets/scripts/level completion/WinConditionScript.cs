@@ -30,7 +30,7 @@ public class WinConditionScript : MonoBehaviour
 
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
         int numberOfEnemies = enemies.Length;
-        enemyCount.text = "combatants: " + enemies.Length.ToString();
+        enemyCount.text = enemies.Length.ToString();
 
         if (numberOfEnemies <= 0)
         {
@@ -43,7 +43,7 @@ public class WinConditionScript : MonoBehaviour
                 endTrigger.SetActive(true);
             }
 
-            if (obstruction != null)//this is where we can add the keycard system with a '&& has keycard bool == true' or something 
+            if (obstruction != null)//THIS IS WHERE THE KEYCARD SYSTEM CAN BE PLACED?
             {
                 Destroy(obstruction);
             }

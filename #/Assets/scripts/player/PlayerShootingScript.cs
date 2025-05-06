@@ -1,9 +1,7 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 using EZCameraShake;
-using UnityEditor.PackageManager;
 
 public class PlayerShootingScript : MonoBehaviour
 {
