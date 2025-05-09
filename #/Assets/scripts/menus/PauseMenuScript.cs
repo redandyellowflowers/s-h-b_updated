@@ -26,14 +26,10 @@ public class PauseMenuScript : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape) && gameIsPaused == false)
         {
             pauseGame();
-            player.GetComponent<PlayerControllerScript>().enabled = false;
-            player.GetComponent<PlayerShootingScript>().enabled = false;
         }
         else if (Input.GetKeyDown(KeyCode.Escape) && gameIsPaused == true)
         {
             resumeGame();
-            player.GetComponent<PlayerControllerScript>().enabled = true;
-            player.GetComponent<PlayerShootingScript>().enabled = true;
         }
     }
     public void pauseGame()
@@ -42,6 +38,9 @@ public class PauseMenuScript : MonoBehaviour
         pauseUI.SetActive(true);
 
         gameIsPaused = true;
+
+        player.GetComponent<PlayerControllerScript>().enabled = false;
+        player.GetComponent<PlayerShootingScript>().enabled = false;
     }
 
     public void resumeGame()
@@ -50,5 +49,8 @@ public class PauseMenuScript : MonoBehaviour
         pauseUI.SetActive(false);
 
         gameIsPaused = false;
+
+        player.GetComponent<PlayerControllerScript>().enabled = true;
+        player.GetComponent<PlayerShootingScript>().enabled = true;
     }
 }

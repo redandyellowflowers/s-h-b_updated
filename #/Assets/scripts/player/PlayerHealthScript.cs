@@ -1,3 +1,4 @@
+using EZCameraShake;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -8,7 +9,7 @@ public class PlayerHealthScript : MonoBehaviour
     [Header("stats")]
     public int currentHealth;
     public int maxHealth;
-    //int lowHealthAlert = 4;
+    int lowHealthAlert = 5;
 
     [Header("UI")]
     public Slider healthBar;
@@ -17,8 +18,7 @@ public class PlayerHealthScript : MonoBehaviour
     [Header("gameObjects")]
     public GameObject impactEffect;
     public GameObject deathParticleEffect;
-    //public GameObject damageScreenUI;
-
+    public GameObject damageScreenUI;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -32,14 +32,12 @@ public class PlayerHealthScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        /*
         if (currentHealth < lowHealthAlert)
         {
             damageScreenUI.SetActive(true);
         }
         else
             damageScreenUI.SetActive(false);
-        */
     }
 
     public void TakeDamage(int amount)
@@ -57,9 +55,11 @@ public class PlayerHealthScript : MonoBehaviour
         {
             FindAnyObjectByType<AudioManager>().Play("enemy death");//REFERENCING AUDIO MANAGER
 
+            CameraShaker.Instance.ShakeOnce(6f, 1f, .1f, .4f);
+
             GameObject BloodExplosion = Instantiate(deathParticleEffect, gameObject.transform.position, Quaternion.Euler(0, 0, Random.Range(0, 360)));
             Destroy(BloodExplosion, 1f);
-            //damageScreenUI.SetActive(false);
+            damageScreenUI.SetActive(false);
 
             Destroy(gameObject);
         }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,11 +19,12 @@ public class DialogueScript : MonoBehaviour
     public GameObject player;
     public CameraFollowScript cam;
     public PlayerControllerScript MovementScript;
+    public float newOffset = -3f;
+    PlayerShootingScript playerShoot;
 
     [Header("UI")]
     public GameObject textBox;
-    public Image headshot;
-    //public GameObject interactPromptText;
+    public GameObject dialogueUI;
     public TextMeshProUGUI dialogueText;
     public TextMeshProUGUI pressToContinue;
     public GameObject interactText;
@@ -42,16 +44,16 @@ public class DialogueScript : MonoBehaviour
     {
         cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraFollowScript>();
         MovementScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerControllerScript>();
+
+        playerShoot = MovementScript.gameObject.GetComponent<PlayerShootingScript>();
+        interactText = gameObject.GetComponentInChildren<TextMeshPro>().gameObject;
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        //interactPromptText.SetActive(false);
-
         player = GameObject.FindGameObjectWithTag("Player");
-
-        headshot.enabled = false;
+        interactText.GetComponent<TextMeshPro>().enabled = false;
     }
 
     // Update is called once per frame
@@ -64,32 +66,28 @@ public class DialogueScript : MonoBehaviour
             gameObject.GetComponent<DialogueScript>().enabled = false;
         }
 
-        if (gameObject.GetComponent<NpcScript>().distance < gameObject.GetComponent<NpcScript>().detectionRadius/2 && gameObject.GetComponent<NpcScript>().hasLineOfSight)
+        if (gameObject.GetComponent<NpcScript>().distance < gameObject.GetComponent<NpcScript>().detectionRadius / 2 && gameObject.GetComponent<NpcScript>().hasLineOfSight)
         {
             interactText.GetComponent<TextMeshPro>().enabled = true;
 
             if (Input.GetKeyDown(KeyCode.E) && isDoneTalking)
             {
+                playerShoot.enabled = false;
+
                 MovementScript.moveSpeed = 0f;
-                cam.yOffset = -3f;
+                cam.yOffset = newOffset;
 
                 textBox.SetActive(true);
-                dialogueText.text = npcName + " : " + "";
+                dialogueUI.SetActive(true);
+                dialogueText.text = npcName + "<br>" + "<br>" + "";
 
-                headshot.enabled = true;
                 dialogueText.enabled = true;
                 NextSentence();
             }
         }
-        else if (gameObject.GetComponent<NpcScript>().distance > gameObject.GetComponent<NpcScript>().detectionRadius/2)
+        else if (gameObject.GetComponent<NpcScript>().distance > gameObject.GetComponent<NpcScript>().detectionRadius / 2)
         {
             interactText.GetComponent<TextMeshPro>().enabled = false;
-
-            //textBox.SetActive(false);
-            dialogueText.text = npcName + " : " + "";
-            index = 0;
-            headshot.enabled = false;
-            dialogueText.enabled = false;
         }
     }
 
@@ -97,18 +95,20 @@ public class DialogueScript : MonoBehaviour
     {
         if (index <= sentences.Length - 1)
         {
-            dialogueText.text = npcName + " : " + "";
+            dialogueText.text = npcName + "<br>" + "<br>" + "";
             StartCoroutine(WriteSentence());
         }
         else
         {
-            dialogueText.text = npcName + " : " + "";
+            playerShoot.enabled = true;
+
+            dialogueText.text = npcName + "<br>" + "<br>" + "";
             index = 0;
 
-            MovementScript.moveSpeed = 12f;
+            MovementScript.moveSpeed = 16f;
             cam.yOffset = 0f;
 
-            headshot.enabled = false;
+            dialogueUI.SetActive(false);
             textBox.SetActive(false);
 
             //Destroy(gameObject, .5f);

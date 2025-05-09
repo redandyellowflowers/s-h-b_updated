@@ -44,15 +44,18 @@ public class EnemyControllerScript : MonoBehaviour
 
     public void FixedUpdate()//used primarily when dealing with physics
     {
-        distance = Vector2.Distance(transform.position, player.transform.position);
-
-        EnemyShootingScript enemyShoot = gameObject.GetComponent<EnemyShootingScript>();
-
-        if (distance < detectionRadius && enemyShoot.hasLineOfSight && player != null)//if the enemy has line of sight on the player, only then do they physically look at the player
+        if (player != null)
         {
-            Vector2 lookDirection = playerPos - rigidBody.position;
-            float angle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg - 90f;
-            rigidBody.rotation = angle;
+            distance = Vector2.Distance(transform.position, player.transform.position);
+
+            EnemyShootingScript enemyShoot = gameObject.GetComponent<EnemyShootingScript>();
+
+            if (distance < detectionRadius && enemyShoot.hasLineOfSight)//if the enemy has line of sight on the player, only then do they physically look at the player
+            {
+                Vector2 lookDirection = playerPos - rigidBody.position;
+                float angle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg - 90f;
+                rigidBody.rotation = angle;
+            }
         }
     }
 

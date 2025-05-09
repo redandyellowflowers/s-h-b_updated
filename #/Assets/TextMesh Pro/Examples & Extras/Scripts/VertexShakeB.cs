@@ -25,8 +25,7 @@ namespace TMPro.Examples
         {
             // Subscribe to event fired when text object has been regenerated.
             TMPro_EventManager.TEXT_CHANGED_EVENT.Add(ON_TEXT_CHANGED);
-
-            StartCoroutine(AnimateVertexColors());//THIS IS THE CHANGE YOU MADE TO THIS SCRIPT, JUST REMOVE THIS LINE FROM HERE TO RESTORE!!!!><><!!><!><!
+            StartCoroutine(AnimateVertexColors());
         }
 
         void OnDisable()

@@ -1023,12 +1023,12 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'chapter 1:
+  m_text: 'disk 1: things fall apart
 
 
-    sophie, our titular main character, recieves a distressing
-    voice message from her spouse, that cuts mid conversation. worried, she goes
-    to his workplace, where the phonecall was made, for answers.'
+    sophie, our titular main character, recieves
+    a distressing voice message from her spouse, that cuts mid conversation. worried,
+    she goes to his workplace, where the phonecall was made, for answers.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
   m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
@@ -1898,7 +1898,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: start chapter
+  m_text: play it.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
   m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
@@ -4479,7 +4479,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: start chapter
+  m_text: 'there isnt a point
+
+    now..'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
   m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
@@ -4689,7 +4691,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.47058827, g: 0.47058827, b: 0.47058827, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.39215687}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -4818,12 +4820,12 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'chapter 4:
+  m_text: 'disk 4: a nothing ending
 
 
-    sophie has finally reached her spouse. this is the last
-    stretch for her, and it isnt certain what will happen. <#FF0000><b>is it sophie?</b></color>
-    all that and for what?'
+    sophie has finally reached her spouse.
+    this is the last stretch for her, and it isnt certain what will happen. <#FF0000><b>is
+    it sophie?</b></color>'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
   m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
@@ -5498,13 +5500,13 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'chapter 3:
+  m_text: 'disk 3: emptiness
 
 
-    during her search, she finds an underground series of
-    floors not listed on any of the elevators, or building maps. she believes in
-    her heart of hearts that this is where he is, and with a fear of the worst slowly
-    creeping in, she proceeds forward.'
+    during her search, she finds an underground series
+    of floors not listed on any of the elevators, or building maps. she believes
+    in her heart of hearts that this is where he is, and with a fear of the worst
+    slowly creeping in, she proceeds forward.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
   m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
@@ -7136,12 +7138,12 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'chapter 5:
+  m_text: 'disk 5: flash forward
 
 
-    the dust has settled. sophies fate, and her spouses,
-    are unknown. do you wish to continue? <b><#FF0000>do you wish to relive this,
-    again, sophie?</color></b>  this is the epilogue.'
+    the dust has settled. sophies fate, and her
+    spouses, are unknown. do you wish to continue? <b><#FF0000>do you wish to relive
+    this, again, sophie?</color></b>  this is the epilogue.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
   m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
@@ -7984,7 +7986,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: start chapter
+  m_text: watch, as it all fails
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
   m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
@@ -9191,7 +9193,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3147737332252371719}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 320546389}
+        m_TargetAssemblyTypeName: SceneManagerScript, Assembly-CSharp
+        m_MethodName: NextLevel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &7376014052686252922
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10518,12 +10532,12 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'chapter 2:
+  m_text: 'disk 2: reckoning abound
 
 
-    sophie returns to her spouses workplace after being given
-    the runaround, and discovers that he''d been there from the start. and so she
-    continues her search for him within the building.'
+    sophie returns to her spouses workplace
+    after being given the runaround, and discovers that he''d been there from the
+    start. and so she continues her search for him within the building.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
   m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
@@ -11252,7 +11266,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: start chapter
+  m_text: play disk.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
   m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
@@ -11819,7 +11833,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: start chapter
+  m_text: play it. you must.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
   m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}

@@ -1,3 +1,5 @@
+using TMPro;
+using TMPro.Examples;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -5,17 +7,19 @@ public class HealthPickUpScript : MonoBehaviour
 {
     public int health = 5;
 
-    //public GameObject pressInteractText;
+    public GameObject interactText;
 
     private void Awake()
     {
-        //pressInteractText = GameObject.Find("pick up hp ui");
+        interactText.GetComponent<TextMeshPro>().enabled = false;
+        interactText.GetComponent<TextMeshPro>().GetComponent<VertexJitter>().enabled = false;
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        //pressInteractText.SetActive(false);
+        interactText.GetComponent<TextMeshPro>().enabled = false;
+        interactText.GetComponent<TextMeshPro>().GetComponent<VertexJitter>().enabled = false;
     }
 
     // Update is called once per frame
@@ -26,7 +30,8 @@ public class HealthPickUpScript : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        //pressInteractText.SetActive(true);
+        interactText.GetComponent<TextMeshPro>().enabled = true;
+        interactText.GetComponent<TextMeshPro>().GetComponent<VertexJitter>().enabled = true;
 
         if (collision.gameObject.tag == "Player" && Input.GetKey(KeyCode.E))//MAYBE BRING BACK THE PRESS E TO INTERACT HERE, IF THIS AFFECTS THE GAME FEEL CONSIDERABLY********
         {
@@ -46,6 +51,7 @@ public class HealthPickUpScript : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        //pressInteractText.SetActive(false);
+        interactText.GetComponent<TextMeshPro>().enabled = false;
+        interactText.GetComponent<TextMeshPro>().GetComponent<VertexJitter>().enabled = false;
     }
 }
