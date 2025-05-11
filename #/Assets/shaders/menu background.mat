@@ -40,7 +40,7 @@ Material:
     - _highlight_spread: 2.5
     - _highlightspread: 0.58
     - _movementspeed: 1
-    - _scale: 0.02
+    - _scale: 1
     - _starttime: 23.6
     m_Colors:
     - _basecolour: {r: 0.21540652, g: 0.20188677, b: 1, a: 0}

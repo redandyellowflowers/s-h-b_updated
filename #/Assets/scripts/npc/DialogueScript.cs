@@ -72,6 +72,8 @@ public class DialogueScript : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.E) && isDoneTalking)
             {
+                //FindAnyObjectByType<AudioManager>().PlayForButton("click_forward");
+
                 playerShoot.enabled = false;
 
                 MovementScript.moveSpeed = 0f;
@@ -129,7 +131,9 @@ public class DialogueScript : MonoBehaviour
         foreach (char character in sentences[index].ToCharArray())
         {
             dialogueText.text += character;
-            //FindAnyObjectByType<AudioManager>().PlayForButton("typing");//REFERENCING AUDIO MANAGER
+
+            FindAnyObjectByType<AudioManager>().PlayForButton("typing");
+
             yield return new WaitForSeconds(dialogueSpeed);
 
             isDoneTalking = false;

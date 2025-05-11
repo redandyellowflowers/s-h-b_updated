@@ -25,10 +25,14 @@ public class PauseMenuScript : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Escape) && gameIsPaused == false)
         {
+            FindAnyObjectByType<AudioManager>().PlayForButton("click_forward");
+
             pauseGame();
         }
         else if (Input.GetKeyDown(KeyCode.Escape) && gameIsPaused == true)
         {
+            FindAnyObjectByType<AudioManager>().PlayForButton("click_backward");
+
             resumeGame();
         }
     }

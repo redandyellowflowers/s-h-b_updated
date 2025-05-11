@@ -24,7 +24,10 @@ public class PlayerControllerScript : MonoBehaviour
     [Header("rendering")]
     public GameObject render;
 
+    [Header("light")]
     public Light2D PlayerLight;
+    public float outerRadius;
+    public float newOuterRadius;
 
     Vector2 mousePos;
 
@@ -123,7 +126,7 @@ public class PlayerControllerScript : MonoBehaviour
             Time.timeScale = .5f;
             Time.fixedDeltaTime = Time.timeScale * 0.02f;
 
-            PlayerLight.pointLightOuterRadius = 20;
+            PlayerLight.pointLightOuterRadius = newOuterRadius;
             PlayerLight.color = Color.red;
 
             currentStamina -= slowMoRate;
@@ -137,7 +140,7 @@ public class PlayerControllerScript : MonoBehaviour
                 currentStamina = 0;
                 Time.timeScale = 1f;
 
-                PlayerLight.pointLightOuterRadius = 10;
+                PlayerLight.pointLightOuterRadius = outerRadius;
                 PlayerLight.color = Color.white;
             }
 
@@ -153,7 +156,7 @@ public class PlayerControllerScript : MonoBehaviour
 
             Time.timeScale = 1f;
 
-            PlayerLight.pointLightOuterRadius = 10;
+            PlayerLight.pointLightOuterRadius = outerRadius;
             PlayerLight.color = Color.white;
 
             currentStamina += slowMoRate;
