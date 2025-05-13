@@ -12,6 +12,7 @@ public class AudioManager : MonoBehaviour
     Code version: 1
     Availability: https://www.youtube.com/watch?v=6OT43pvUyfY&t=620s
     */
+    public bool isStartMenu;
 
     public Sound[] sounds;//the [] allows for lists
 
@@ -44,7 +45,10 @@ public class AudioManager : MonoBehaviour
 
     private void Start()
     {
-        //Play("background");//plays the theme song at the start of the game
+        if (isStartMenu)
+        {
+            Play("background");//plays the theme song at the start of the game
+        }
     }
 
     public void Play(string name)//string name will find sound with appropriate name

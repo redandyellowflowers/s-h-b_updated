@@ -57,10 +57,10 @@ public class TargetHealthScript : MonoBehaviour
 
     public IEnumerator LightFX()//when the enemy is hit, a red light is emmitted to indictate this
     {
-        lightOBJ.enabled = true;
+        lightOBJ.color = Color.red;
 
         yield return new WaitForSeconds(.1f);
 
-        lightOBJ.enabled = false;
+        lightOBJ.color = Color.white;
     }
 }

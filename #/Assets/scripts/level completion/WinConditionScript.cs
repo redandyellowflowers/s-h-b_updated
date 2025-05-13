@@ -10,6 +10,7 @@ public class WinConditionScript : MonoBehaviour
     public string completionPrompt = "'leave!'";//to be displayed once all enemies have been killed
 
     public TextMeshProUGUI enemyCount;
+    public TextMeshProUGUI keyCount;
 
     [Header("gameObjects")]
     public Image flashScreen;
@@ -19,6 +20,7 @@ public class WinConditionScript : MonoBehaviour
     GameObject obstruction;
 
     public GameObject[] enemies;
+    public GameObject[] keys;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -34,9 +36,18 @@ public class WinConditionScript : MonoBehaviour
 
         enemies = GameObject.FindGameObjectsWithTag("Enemy");
         int numberOfEnemies = enemies.Length;
-        enemyCount.text = enemies.Length.ToString();
+        enemyCount.text = "<size=100%><#ff0000>enemies</color> in level: <size=100%>" + enemies.Length.ToString();
 
-        if (numberOfEnemies <= 0)
+        keys = GameObject.FindGameObjectsWithTag("Respawn");
+        int maxNumberOfKeys = keys.Length;
+        keyCount.text = "<size=40%>no. of <#ff0000>hints</color> in level: <size=40%><#ff0000>" + keys.Length.ToString();
+
+        if (maxNumberOfKeys == 0)
+        {
+            keyCount.text = "<size=40%>all <#ff0000>hints</color> have been collected";
+        }
+
+        if (numberOfEnemies <= 0 && maxNumberOfKeys <= 0)
         {
             StartCoroutine(Flash());
             enemyCount.text = completionPrompt.ToString();

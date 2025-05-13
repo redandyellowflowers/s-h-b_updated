@@ -44,6 +44,11 @@ public class PlayerShootingScript : MonoBehaviour
     {
         Shoot();
         Reload();
+
+        if (currentAmmo > 0)
+        {
+            lineRenderer.gameObject.SetActive(true);
+        }
     }
 
     public void Shoot()
@@ -76,7 +81,15 @@ public class PlayerShootingScript : MonoBehaviour
                     isShooting = false;
 
                     currentAmmo = 0;
-                    ammoCountText.text = "reload".ToString();
+
+                    if (Reloadable)
+                    {
+                        ammoCountText.text = "reload".ToString();
+                    }
+                    else
+                    {
+                        ammoCountText.text = "reload".ToString();
+                    }
 
                     FindAnyObjectByType<AudioManager>().Stop("shoot");//REFERENCING AUDIO MANAGER
                     FindAnyObjectByType<AudioManager>().Play("empty");//REFERENCING AUDIO MANAGER
@@ -168,5 +181,18 @@ public class PlayerShootingScript : MonoBehaviour
 
             lineRenderer.gameObject.SetActive(true);
         }
+    }
+
+    public void AddAmmo(int amount)
+    {
+        currentAmmo += amount;
+        ammoCountText.text = currentAmmo + "/" + maxAmmo.ToString();
+
+        if (currentAmmo >= maxAmmo)
+        {
+            currentAmmo = maxAmmo;
+        }
+
+        lineRenderer.gameObject.SetActive(true);
     }
 }

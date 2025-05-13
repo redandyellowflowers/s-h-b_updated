@@ -1,3 +1,4 @@
+using EZCameraShake;
 using System;
 using System.Collections;
 using TMPro;
@@ -107,6 +108,7 @@ public class IntroScript : MonoBehaviour
 
         introUi.SetActive(false);
         gameObject.GetComponent<IntroScript>().enabled = false;
+        FindAnyObjectByType<AudioManager>().Stop("typing");//REFERENCING AUDIO MANAGER
         player.GetComponent<PlayerControllerScript>().enabled = true;
         player.GetComponent<PlayerShootingScript>().enabled = true;
     }

@@ -1,3 +1,4 @@
+using EZCameraShake;
 using System;
 using System.Collections;
 using TMPro;
@@ -42,6 +43,9 @@ public class DialogueScript : MonoBehaviour
     [TextArea(2, 4)]public string[] sentences;
     private int index = 0;//tracking the sentences
 
+    public Animator anim;
+    bool dialogueAnim;
+
     private bool isDoneTalking = true;
 
     [Header("event after dialogue")]
@@ -54,6 +58,8 @@ public class DialogueScript : MonoBehaviour
 
         playerShoot = MovementScript.gameObject.GetComponent<PlayerShootingScript>();
         interactText = gameObject.GetComponentInChildren<TextMeshPro>().gameObject;
+
+        anim = dialogueUI.GetComponent<Animator>();
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -81,6 +87,8 @@ public class DialogueScript : MonoBehaviour
             {
                 //FindAnyObjectByType<AudioManager>().PlayForButton("click_forward");
 
+                dialogueAnim = false;
+
                 playerShoot.enabled = false;
 
                 MovementScript.moveSpeed = 0f;
@@ -92,6 +100,8 @@ public class DialogueScript : MonoBehaviour
 
                 dialogueText.enabled = true;
                 NextSentence();
+
+                anim.SetBool("dialogue_ended", dialogueAnim);
             }
         }
         else if (gameObject.GetComponent<NpcScript>().distance > gameObject.GetComponent<NpcScript>().detectionRadius / 2)
@@ -109,6 +119,8 @@ public class DialogueScript : MonoBehaviour
         }
         else
         {
+            dialogueAnim = true;
+
             playerShoot.enabled = true;
 
             dialogueText.text = npcName + "<br>" + "<br>" + "";
@@ -167,6 +179,7 @@ public class DialogueScript : MonoBehaviour
         if (flashScreen != null)
         {
             flashScreen.enabled = true;
+            CameraShaker.Instance.ShakeOnce(5f, 1f, .1f, .4f);
 
             yield return new WaitForSeconds(0.02f);
 
