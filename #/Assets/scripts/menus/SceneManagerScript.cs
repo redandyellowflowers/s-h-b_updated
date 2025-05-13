@@ -10,9 +10,12 @@ public class SceneManagerScript : MonoBehaviour
     public Slider slider;
 
 
-    /*
+    
     void Awake()//awake is called before start, and is most usefull in this case, for setting up references to other scripts as its called before the start method
     {
+        Time.timeScale = 1f;
+
+        /*
         if (sceneManager == null)
         {
             sceneManager = this;
@@ -22,12 +25,12 @@ public class SceneManagerScript : MonoBehaviour
         {
             Destroy(gameObject);//as a new scene is loaded, the gameobject this script is attached to will follow, and if the object already exists, then this (now duplicate) is deleted
         }
+        */
     }
-    */
 
     private void Start()
     {
-        Time.timeScale = 1f;
+
     }
 
     // Update is called once per frame

@@ -4,6 +4,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class DialogueScript : MonoBehaviour
 {
@@ -14,6 +15,12 @@ public class DialogueScript : MonoBehaviour
     Code version: 1
     Availability: https://www.youtube.com/watch?v=hvgfFNorZH8
     */
+
+    public bool isBrokenSophie;
+    public GameObject impactEffect;
+    public GameObject deathParticleEffect;
+
+    public Image flashScreen;
 
     [Header("player")]
     public GameObject player;
@@ -113,7 +120,18 @@ public class DialogueScript : MonoBehaviour
             dialogueUI.SetActive(false);
             textBox.SetActive(false);
 
-            //Destroy(gameObject, .5f);
+            if (isBrokenSophie)
+            {
+                StartCoroutine(Flash());
+
+                GameObject impactGameobject = Instantiate(impactEffect, gameObject.transform.position, gameObject.transform.rotation);
+
+                GameObject BloodExplosion = Instantiate(deathParticleEffect, gameObject.transform.position, Quaternion.Euler(0, 0, Random.Range(0, 360)));
+                Destroy(BloodExplosion, 1f);
+
+                FindAnyObjectByType<AudioManager>().Play("enemy death");//REFERENCING AUDIO MANAGER
+            }
+
 
             if (nextNPC != null)
             {
@@ -142,5 +160,19 @@ public class DialogueScript : MonoBehaviour
         isDoneTalking = true;
         pressToContinue.enabled = true;
         index++;
+    }
+
+    IEnumerator Flash()
+    {
+        if (flashScreen != null)
+        {
+            flashScreen.enabled = true;
+
+            yield return new WaitForSeconds(0.02f);
+
+            flashScreen.enabled = false;
+
+            Destroy(gameObject);
+        }
     }
 }

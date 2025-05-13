@@ -10,6 +10,7 @@ public class GameoverScript : MonoBehaviour
 
     [Header("text")]
     public TextMeshProUGUI gameoverText;
+    [TextArea(2, 4)]
     public string text;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -24,6 +25,9 @@ public class GameoverScript : MonoBehaviour
     {
         if (player == null)
         {
+            FindAnyObjectByType<AudioManager>().Stop("background");
+            //FindAnyObjectByType<AudioManager>().Play("enemies are dead");//REFERENCING AUDIO MANAGER
+
             gameOverUI.SetActive(true);
             gameoverText.text = text.ToString();
 

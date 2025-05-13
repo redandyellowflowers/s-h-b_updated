@@ -44,7 +44,7 @@ public class AudioManager : MonoBehaviour
 
     private void Start()
     {
-        Play("background");//plays the theme song at the start of the game
+        //Play("background");//plays the theme song at the start of the game
     }
 
     public void Play(string name)//string name will find sound with appropriate name

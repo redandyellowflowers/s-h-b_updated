@@ -1,6 +1,8 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.UI;
 
 public class WinConditionScript : MonoBehaviour
 {
@@ -10,6 +12,8 @@ public class WinConditionScript : MonoBehaviour
     public TextMeshProUGUI enemyCount;
 
     [Header("gameObjects")]
+    public Image flashScreen;
+
     public GameObject endTrigger;
 
     GameObject obstruction;
@@ -34,9 +38,11 @@ public class WinConditionScript : MonoBehaviour
 
         if (numberOfEnemies <= 0)
         {
+            StartCoroutine(Flash());
             enemyCount.text = completionPrompt.ToString();
 
             FindAnyObjectByType<AudioManager>().Stop("background");//REFERENCING AUDIO MANAGER
+            FindAnyObjectByType<AudioManager>().Play("enemies are dead");
 
             if (endTrigger != null)
             {
@@ -47,6 +53,19 @@ public class WinConditionScript : MonoBehaviour
             {
                 Destroy(obstruction);
             }
+        }
+    }
+
+    IEnumerator Flash()
+    {
+        if (flashScreen != null)
+        {
+            flashScreen.enabled = true;
+
+            yield return new WaitForSeconds(0.02f);
+
+            flashScreen.enabled = false;
+            gameObject.GetComponent<WinConditionScript>().enabled = false;
         }
     }
 }

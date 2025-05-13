@@ -21,6 +21,7 @@ public class PauseMenuScript : MonoBehaviour
         if (player == null)
         {
             gameObject.GetComponent<PauseMenuScript>().enabled = false;
+            FindAnyObjectByType<AudioManager>().Play("enemies are dead");//this is meant to go in the gameover script, if you can find out why the audio bugs out when placed there
         }
 
         if (Input.GetKeyDown(KeyCode.Escape) && gameIsPaused == false)

@@ -28,7 +28,7 @@ public class NextLevelScript : MonoBehaviour
     {
         levelCompleteUi.SetActive(false);
 
-        FindAnyObjectByType<AudioManager>().Play("enemies are dead");//REFERENCING AUDIO MANAGER
+        //FindAnyObjectByType<AudioManager>().Play("_enemies are dead");
     }
 
     // Update is called once per frame
@@ -44,10 +44,12 @@ public class NextLevelScript : MonoBehaviour
 
         if (collision.gameObject.tag == "Player" && Input.GetKey(KeyCode.E))
         {
-            InteractToWin();
+            //InteractToWin();
 
             collision.gameObject.GetComponent<PlayerControllerScript>().enabled = false;
             collision.gameObject.GetComponent<PlayerShootingScript>().enabled = false;
+
+            //SOMEWAY TO SHOW THAT THE PLAYER HAS MADE PROGRESS
 
             pauseMenu_gameManager.GetComponent<PauseMenuScript>().enabled = false;
 
@@ -55,11 +57,13 @@ public class NextLevelScript : MonoBehaviour
         }
     }
 
+    /*
     public void InteractToWin()
     {
         //levelCompleteUi.SetActive(true);
         Time.timeScale = 0f;
     }
+    */
 
     public void OnTriggerExit2D(Collider2D collision)
     {
