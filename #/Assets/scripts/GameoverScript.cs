@@ -1,23 +1,30 @@
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class GameoverScript : MonoBehaviour
 {
-    [Header("gameObjects")]
+    [Header("player")]
     public GameObject player;
+
+    [Header("gameObjects")]
     public GameObject gameOverUI;
 
     [Header("text")]
     public TextMeshProUGUI gameoverText;
+
     [TextArea(2, 4)]
     public string text;
+
+    private void Awake()
+    {
+        player = GameObject.FindWithTag("Player");
+        gameoverText = gameOverUI.GetComponentInChildren<TextMeshProUGUI>();
+    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        player = GameObject.FindWithTag("Player");
-        gameoverText = gameOverUI.GetComponentInChildren<TextMeshProUGUI>();
+
     }
 
     // Update is called once per frame
@@ -26,17 +33,10 @@ public class GameoverScript : MonoBehaviour
         if (player == null)
         {
             FindAnyObjectByType<AudioManager>().Stop("background");
-            //FindAnyObjectByType<AudioManager>().Play("enemies are dead");//REFERENCING AUDIO MANAGER
+            //FindAnyObjectByType<AudioManager>().Play("enemies are dead");
 
             gameOverUI.SetActive(true);
             gameoverText.text = text.ToString();
-
-            /*
-            if (Input.GetKeyDown(KeyCode.Backspace))
-            {
-                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-            }
-            */
         }
     }
 }

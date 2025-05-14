@@ -17,8 +17,7 @@ public class PickUpToCompleteLevelScript : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        interactText.GetComponent<TextMeshPro>().enabled = false;
-        interactText.GetComponent<TextMeshPro>().GetComponent<VertexJitter>().enabled = false;
+
     }
 
     // Update is called once per frame
@@ -34,7 +33,7 @@ public class PickUpToCompleteLevelScript : MonoBehaviour
 
         if (collision.gameObject.tag == "Player" && Input.GetKey(KeyCode.E))
         {
-            FindAnyObjectByType<AudioManager>().Play("health pick");//REFERENCING AUDIO MANAGER
+            FindAnyObjectByType<AudioManager>().Play("health pick");
             //numberOfKeys++;
             Destroy(gameObject);
         }

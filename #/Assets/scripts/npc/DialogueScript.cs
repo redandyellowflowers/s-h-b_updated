@@ -18,17 +18,15 @@ public class DialogueScript : MonoBehaviour
     */
 
     public bool isBrokenSophie;
-    public GameObject impactEffect;
-    public GameObject deathParticleEffect;
-
-    public Image flashScreen;
 
     [Header("player")]
     public GameObject player;
     public CameraFollowScript cam;
-    public PlayerControllerScript MovementScript;
-    public float newOffset = -3f;
+    PlayerControllerScript MovementScript;
     PlayerShootingScript playerShoot;
+
+    [Header("values")]
+    public float newOffset = -3f;
 
     [Header("UI")]
     public GameObject textBox;
@@ -43,8 +41,15 @@ public class DialogueScript : MonoBehaviour
     [TextArea(2, 4)]public string[] sentences;
     private int index = 0;//tracking the sentences
 
+    [Header("effects")]
+    public GameObject bloodSplatter;
+    public GameObject bloodExplosionEffect;
+
+    public Image flashScreen;
+
+    [Header("animation/s")]
     public Animator anim;
-    bool dialogueAnim;
+    bool dialogueHasEnded;
 
     private bool isDoneTalking = true;
 
@@ -53,10 +58,12 @@ public class DialogueScript : MonoBehaviour
 
     private void Awake()
     {
+        player = GameObject.FindGameObjectWithTag("Player");
+
         cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraFollowScript>();
         MovementScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerControllerScript>();
 
-        playerShoot = MovementScript.gameObject.GetComponent<PlayerShootingScript>();
+        playerShoot = player.gameObject.GetComponent<PlayerShootingScript>();
         interactText = gameObject.GetComponentInChildren<TextMeshPro>().gameObject;
 
         anim = dialogueUI.GetComponent<Animator>();
@@ -65,7 +72,6 @@ public class DialogueScript : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
         interactText.GetComponent<TextMeshPro>().enabled = false;
     }
 
@@ -87,7 +93,7 @@ public class DialogueScript : MonoBehaviour
             {
                 //FindAnyObjectByType<AudioManager>().PlayForButton("click_forward");
 
-                dialogueAnim = false;
+                dialogueHasEnded = false;
 
                 playerShoot.enabled = false;
 
@@ -101,7 +107,7 @@ public class DialogueScript : MonoBehaviour
                 dialogueText.enabled = true;
                 NextSentence();
 
-                anim.SetBool("dialogue_ended", dialogueAnim);
+                anim.SetBool("dialogue_ended", dialogueHasEnded);
             }
         }
         else if (gameObject.GetComponent<NpcScript>().distance > gameObject.GetComponent<NpcScript>().detectionRadius / 2)
@@ -119,7 +125,7 @@ public class DialogueScript : MonoBehaviour
         }
         else
         {
-            dialogueAnim = true;
+            dialogueHasEnded = true;
 
             playerShoot.enabled = true;
 
@@ -136,9 +142,9 @@ public class DialogueScript : MonoBehaviour
             {
                 StartCoroutine(Flash());
 
-                GameObject impactGameobject = Instantiate(impactEffect, gameObject.transform.position, gameObject.transform.rotation);
+                GameObject impactGameobject = Instantiate(bloodSplatter, gameObject.transform.position, gameObject.transform.rotation);
 
-                GameObject BloodExplosion = Instantiate(deathParticleEffect, gameObject.transform.position, Quaternion.Euler(0, 0, Random.Range(0, 360)));
+                GameObject BloodExplosion = Instantiate(bloodExplosionEffect, gameObject.transform.position, Quaternion.Euler(0, 0, Random.Range(0, 360)));
                 Destroy(BloodExplosion, 1f);
 
                 FindAnyObjectByType<AudioManager>().Play("enemy death");//REFERENCING AUDIO MANAGER

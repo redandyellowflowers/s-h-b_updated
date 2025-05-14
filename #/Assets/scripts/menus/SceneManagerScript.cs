@@ -5,12 +5,18 @@ using UnityEngine.UI;
 
 public class SceneManagerScript : MonoBehaviour
 {
+    /*
+    Title: How to make a LOADING BAR in Unity
+    Author: Asbjørn Thirslund / Brackeys
+    Date: 14 May 2025
+    Code version: 1
+    Availability: https://www.youtube.com/watch?v=YMj2qPq9CP8&t=258s
+    */
+
     public static SceneManagerScript sceneManager;//in this case, static means youve made the accessable within other scripts, but wont show in the inspector
     public GameObject loadingScreen;
     public Slider slider;
-
-
-    
+   
     void Awake()//awake is called before start, and is most usefull in this case, for setting up references to other scripts as its called before the start method
     {
         Time.timeScale = 1f;
@@ -36,7 +42,12 @@ public class SceneManagerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        /*
+        if (Input.GetKeyDown(KeyCode.Backspace))
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+        */
     }
 
     public void NextLevel()

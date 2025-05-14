@@ -5,6 +5,9 @@ using EZCameraShake;
 
 public class PlayerShootingScript : MonoBehaviour
 {
+    [Header("gameObjects")]
+    public GameObject firePoint;
+
     [Header("stats")]
     public int currentAmmo;
     public int maxAmmo;
@@ -19,24 +22,29 @@ public class PlayerShootingScript : MonoBehaviour
     [Header("UI")]
     public TextMeshProUGUI ammoCountText;
 
-    [Header("gameObjects")]
-    public GameObject firePoint;
+    [Header("effects")]
     public LineRenderer lineRenderer;
-    public GameObject impactEffect;
-    public GameObject bloodImpactEffect;
+    public GameObject greyImpactEffect;
+    public GameObject redImpactEffect;
     public ParticleSystem muzzleflash;
+
+    [Header("animation/s")]
     public Animator anim;
 
     private bool hasLineOfSight = false;
     private bool isShooting = false;
+
+
+    private void Awake()
+    {
+        anim = gameObject.GetComponentInChildren<Animator>();
+    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         ammoCountText.text = currentAmmo + "/" + maxAmmo.ToString();
         currentAmmo = maxAmmo;
-
-        anim = gameObject.GetComponentInChildren<Animator>();
     }
 
     // Update is called once per frame
@@ -57,21 +65,19 @@ public class PlayerShootingScript : MonoBehaviour
 
         if (Input.GetKey(KeyCode.Mouse0))
         {
-
             if (Time.time >= nextTimeToFire)
             {
-                nextTimeToFire = Time.time + 1f / fireRate;//adds a bit of delay before the enemy fires (by dividing 1 by the fire rate and adding that to the time.time, which is the current "game" time) as for them to not gun down the player in seconds
+                nextTimeToFire = Time.time + 1f / fireRate;
 
                 StartCoroutine(targetRays());
 
                 isShooting = true;
-                //camerashake
                 CameraShaker.Instance.ShakeOnce(3f, 1f, .1f, .4f);
                 MuzzleFlash();
 
                 currentAmmo -= 1;
 
-                FindAnyObjectByType<AudioManager>().Play("shoot");//REFERENCING AUDIO MANAGER
+                FindAnyObjectByType<AudioManager>().Play("shoot");
 
                 //print("Ammo count " + currentAmmo);
                 ammoCountText.text = currentAmmo + "/" + maxAmmo.ToString();
@@ -91,8 +97,8 @@ public class PlayerShootingScript : MonoBehaviour
                         ammoCountText.text = "reload".ToString();
                     }
 
-                    FindAnyObjectByType<AudioManager>().Stop("shoot");//REFERENCING AUDIO MANAGER
-                    FindAnyObjectByType<AudioManager>().Play("empty");//REFERENCING AUDIO MANAGER
+                    FindAnyObjectByType<AudioManager>().Stop("shoot");
+                    FindAnyObjectByType<AudioManager>().Play("empty");
 
                     //print("out of ammo");
 
@@ -103,7 +109,7 @@ public class PlayerShootingScript : MonoBehaviour
         anim.SetBool("isShooting", isShooting);
     }
 
-    public IEnumerator targetRays()//as i understand it, IEnumerators allow for timers, or other such functions, and is convenient for that
+    public IEnumerator targetRays()//as i understand it, IEnumerators allow for timers, or other such time specific functions, and is convenient for that
     {
         RaycastHit2D ray = Physics2D.Raycast(firePoint.transform.position, transform.up, range);
         if (ray.collider != null)
@@ -114,6 +120,7 @@ public class PlayerShootingScript : MonoBehaviour
                 Debug.DrawRay(firePoint.transform.position, transform.up * range, Color.green);
 
                 TargetHealthScript target = ray.transform.GetComponent<TargetHealthScript>();
+
                 if (target != null && currentAmmo != 0)//meaning that this will only happen when the object being fired at has a target script
                 {
                     target.takeDamage(damage);
@@ -125,8 +132,8 @@ public class PlayerShootingScript : MonoBehaviour
 
                 if (currentAmmo != 0)
                 {
-                    GameObject impactGameobject = Instantiate(bloodImpactEffect, ray.point, Quaternion.LookRotation(ray.normal));
-                    Destroy(impactGameobject, 2f);
+                    GameObject redImpactGameobject = Instantiate(redImpactEffect, ray.point, Quaternion.LookRotation(ray.normal));
+                    Destroy(redImpactGameobject, 2f);
                 }
             }
             else
@@ -139,8 +146,8 @@ public class PlayerShootingScript : MonoBehaviour
 
                 if (currentAmmo != 0)
                 {
-                    GameObject impactGameobject = Instantiate(impactEffect, ray.point, Quaternion.LookRotation(ray.normal));
-                    Destroy(impactGameobject, 2f);
+                    GameObject greyImpactGameobject = Instantiate(greyImpactEffect, ray.point, Quaternion.LookRotation(ray.normal));
+                    Destroy(greyImpactGameobject, 2f);
                 }
             }
 
@@ -151,14 +158,13 @@ public class PlayerShootingScript : MonoBehaviour
             lineRenderer.enabled = false;
 
             /*
-            if (ray.collider.CompareTag("Respawn"))
+            if (ray.collider.CompareTag("Non player character"))
             {
                 print("I will not do that.");
             }
             */
         }
     }
-
 
     public void MuzzleFlash()
     {
@@ -173,7 +179,7 @@ public class PlayerShootingScript : MonoBehaviour
 
             if (currentAmmo < maxAmmo)
             {
-                FindAnyObjectByType<AudioManager>().Play("reload");//REFERENCING AUDIO MANAGER
+                FindAnyObjectByType<AudioManager>().Play("reload");
             }
 
             currentAmmo = maxAmmo;

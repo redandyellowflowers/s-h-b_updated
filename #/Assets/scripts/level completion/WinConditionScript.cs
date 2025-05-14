@@ -1,3 +1,4 @@
+using EZCameraShake;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -19,6 +20,7 @@ public class WinConditionScript : MonoBehaviour
 
     GameObject obstruction;
 
+    [Header("lists")]
     public GameObject[] enemies;
     public GameObject[] keys;
 
@@ -40,19 +42,21 @@ public class WinConditionScript : MonoBehaviour
 
         keys = GameObject.FindGameObjectsWithTag("Respawn");
         int maxNumberOfKeys = keys.Length;
-        keyCount.text = "<size=40%>no. of <#ff0000>hints</color> in level: <size=40%><#ff0000>" + keys.Length.ToString();
+        keyCount.text = "<size=40%>no. of <#ff0000>cd's</color> in level: <size=40%><#ff0000>" + keys.Length.ToString();
 
         if (maxNumberOfKeys == 0)
         {
-            keyCount.text = "<size=40%>all <#ff0000>hints</color> have been collected";
+            keyCount.text = "<size=40%>all <#ff0000>cd's</color> have been collected";
         }
 
         if (numberOfEnemies <= 0 && maxNumberOfKeys <= 0)
         {
+            CameraShaker.Instance.ShakeOnce(6f, 1f, .1f, .4f);
+
             StartCoroutine(Flash());
             enemyCount.text = completionPrompt.ToString();
 
-            FindAnyObjectByType<AudioManager>().Stop("background");//REFERENCING AUDIO MANAGER
+            FindAnyObjectByType<AudioManager>().Stop("background");
             FindAnyObjectByType<AudioManager>().Play("enemies are dead");
 
             if (endTrigger != null)
@@ -60,7 +64,7 @@ public class WinConditionScript : MonoBehaviour
                 endTrigger.SetActive(true);
             }
 
-            if (obstruction != null)//THIS IS WHERE THE KEYCARD SYSTEM CAN BE PLACED?
+            if (obstruction != null)
             {
                 Destroy(obstruction);
             }

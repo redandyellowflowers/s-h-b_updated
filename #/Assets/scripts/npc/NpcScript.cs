@@ -8,7 +8,6 @@ public class NpcScript : MonoBehaviour
     [Header("player")]
     public GameObject player;
 
-
     [HideInInspector]
     public bool hasLineOfSight = false;
 
@@ -17,7 +16,7 @@ public class NpcScript : MonoBehaviour
     public GameObject render;
     public GameObject firePoint;
 
-    [Header("stats")]
+    [Header("values")]
     public int detectionRadius = 10;
 
     public bool isIsometric;
@@ -27,10 +26,16 @@ public class NpcScript : MonoBehaviour
 
     Vector2 playerPos;
 
+
+    private void Awake()
+    {
+        player = GameObject.FindGameObjectWithTag("Player");
+    }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
+
     }
 
     // Update is called once per frame
@@ -50,13 +55,13 @@ public class NpcScript : MonoBehaviour
             gameObject.GetComponent<NpcScript>().enabled = false;
     }
 
-    public void FixedUpdate()//used primarily when dealing with physics
+    public void FixedUpdate()
     {
         if (player != null)
         {
             distance = Vector2.Distance(transform.position, player.transform.position);
 
-            if (distance < detectionRadius && hasLineOfSight && player != null)//if the object has line of sight of the player, then they look, otherwise, theyre static
+            if (distance < detectionRadius && hasLineOfSight && player != null)
             {
                 Vector2 lookDirection = playerPos - rigidBody.position;
                 float angle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg - 90f;

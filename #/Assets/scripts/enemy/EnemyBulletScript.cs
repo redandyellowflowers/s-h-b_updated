@@ -2,9 +2,12 @@ using UnityEngine;
 
 public class EnemyBulletScript : MonoBehaviour
 {
-    public int bullletDamage = 5;
+    [Header("gameObjects")]
     public GameObject impactEffect;
     public GameObject bloodImpactEffect;
+
+    [Header("stats")]
+    public int bullletDamage = 5;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -22,7 +25,7 @@ public class EnemyBulletScript : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
-            FindAnyObjectByType<AudioManager>().Play("impact");//REFERENCING AUDIO MANAGER
+            FindAnyObjectByType<AudioManager>().Play("impact");
 
             GameObject impactGameobject = Instantiate(bloodImpactEffect, collision.transform.position, Quaternion.LookRotation(collision.transform.up));
             Destroy(impactGameobject, 2f);

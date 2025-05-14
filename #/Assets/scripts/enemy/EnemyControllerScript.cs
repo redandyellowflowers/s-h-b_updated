@@ -13,17 +13,22 @@ public class EnemyControllerScript : MonoBehaviour
     [Header("stats")]
     public int detectionRadius = 10;
 
-    public bool isIsometric;
+    bool isIsometric = false;
 
     [HideInInspector]
     public float distance;
 
     Vector2 playerPos;
 
+    private void Awake()
+    {
+        player = GameObject.FindGameObjectWithTag("Player");
+    }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
+
     }
 
     // Update is called once per frame
@@ -59,5 +64,5 @@ public class EnemyControllerScript : MonoBehaviour
         }
     }
 
-    //this is wherein we can add the enemy follow player mechanic
+    //this is wherein the enemy follow player mechanic can be added
 }

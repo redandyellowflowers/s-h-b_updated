@@ -12,9 +12,9 @@ public class PlayerControllerScript : MonoBehaviour
 
     public Camera cam;
 
-    public bool isIsometric;
+    bool isIsometric = false;
 
-    [Header("slow motion")]
+    [Header("bullet time")]
     public float currentStamina;
     public float MaxStamina;
     public float slowMoRate;
@@ -31,24 +31,26 @@ public class PlayerControllerScript : MonoBehaviour
 
     Vector2 mousePos;
 
+    [Header("animation/s")]
     private Animator anim;
     bool isWalking = false;
     bool bulletTime = false;
 
     private void Awake()
     {
+        if (Time.timeScale != 1)
+        {
+            Time.timeScale = 1;
+        }
 
+        anim = gameObject.GetComponentInChildren<Animator>();
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        Time.timeScale = 1;
-
         bulletTimeBar.maxValue = MaxStamina;
         bulletTimeBar.value = currentStamina;
-
-        anim = gameObject.GetComponentInChildren<Animator>();
     }
 
     // Update is called once per frame
@@ -56,7 +58,7 @@ public class PlayerControllerScript : MonoBehaviour
     {
         mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
 
-        moveMent();
+        MoveMent();
 
         if (isIsometric)
         {
@@ -81,12 +83,12 @@ public class PlayerControllerScript : MonoBehaviour
         rigidBody.rotation = angle;
     }
 
-    public void moveMent()
+    public void MoveMent()
     {
         isWalking = false;
         bulletTime = false;
 
-        Vector3 movePosition = Vector3.zero;//we're defined the vector (the 3 axis with which we need for our controller to move)
+        Vector3 movePosition = Vector3.zero;
 
         if (Input.GetKey(KeyCode.W))
         {
@@ -169,16 +171,9 @@ public class PlayerControllerScript : MonoBehaviour
             }
         }
 
-            /*
-            if (Input.GetKeyDown(KeyCode.Backspace))
-            {
-                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-            }
-            */
+        rigidBody.transform.position += movePosition.normalized * moveSpeed * Time.deltaTime;//this line (more so the "normalized" and "time.deltatime") essentially stops the controller from building up an unfixed amount of momentum
 
-            rigidBody.transform.position += movePosition.normalized * moveSpeed * Time.deltaTime;//this line (more so the "normalized" and "time.deltatime") essentially stops the controller from building an unfixed amount of momentum
-
-            anim.SetBool("isWalking", isWalking);
-            anim.SetBool("slow motion", bulletTime);
+        anim.SetBool("isWalking", isWalking);
+        anim.SetBool("slow motion", bulletTime);
     }
 }

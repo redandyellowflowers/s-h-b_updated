@@ -24,10 +24,16 @@ public class EnemyShootingScript : MonoBehaviour
 
     private bool isShooting = false;
 
+
+    private void Awake()
+    {
+        player = GameObject.FindGameObjectWithTag("Player");
+    }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
+
     }
 
     // Update is called once per frame
@@ -61,12 +67,12 @@ public class EnemyShootingScript : MonoBehaviour
 
                 if (Time.time >= nextTimeToFire)
                 {
-                    nextTimeToFire = Time.time + 1f / fireRate;//adds a bit of delay before the enemy fires (by dividing 1 by the fire rate and adding that to the time.time, which is the current "game" time) as for them to not gun down the player in seconds
+                    nextTimeToFire = Time.time + 1f / fireRate;//adds a bit of delay before the enemy fires (by dividing 1 by the fire rate and adding that to the time.time, which is the current "game" time)
 
                     MuzzleFlash();
                     isShooting = true;
 
-                    FindAnyObjectByType<AudioManager>().Play("enemy shoot");//REFERENCING AUDIO MANAGER
+                    FindAnyObjectByType<AudioManager>().Play("enemy shoot");
 
                     GameObject bullet = Instantiate(bulletPrefab, firePoint.transform.position, firePoint.transform.rotation);
                     Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
@@ -84,7 +90,7 @@ public class EnemyShootingScript : MonoBehaviour
             {
                 isShooting = false;
 
-                //gameObject.GetComponent<BoxCollider2D>().enabled = false;//isnt necessary, COME BACK TO THIS
+                //gameObject.GetComponent<BoxCollider2D>().enabled = false;
                 Debug.DrawRay(firePoint.transform.position, player.transform.position - firePoint.transform.position, Color.red);
             }
         }

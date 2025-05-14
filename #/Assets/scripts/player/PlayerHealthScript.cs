@@ -16,8 +16,8 @@ public class PlayerHealthScript : MonoBehaviour
     //public TextMeshProUGUI healthText;
 
     [Header("gameObjects")]
-    public GameObject impactEffect;
-    public GameObject deathParticleEffect;
+    public GameObject bloodSplatter;
+    public GameObject bloodExplosionEffect;
     public GameObject damageScreenUI;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -48,16 +48,16 @@ public class PlayerHealthScript : MonoBehaviour
         //healthText.text = currentHealth + "/" + maxHealth.ToString();
         //print("Enemy Damage " + currentHealth);
 
-        GameObject impactGameobject = Instantiate(impactEffect, gameObject.transform.position, Quaternion.Euler(0, 0, Random.Range(0, 360)));
-        Destroy(impactGameobject, 3f);
+        GameObject groundBloodSplatter = Instantiate(bloodSplatter, gameObject.transform.position, Quaternion.Euler(0, 0, Random.Range(0, 360)));
+        Destroy(groundBloodSplatter, 3f);
 
         if (currentHealth <= 0)
         {
-            FindAnyObjectByType<AudioManager>().Play("enemy death");//REFERENCING AUDIO MANAGER
+            FindAnyObjectByType<AudioManager>().Play("enemy death");
 
             CameraShaker.Instance.ShakeOnce(6f, 1f, .1f, .4f);
 
-            GameObject BloodExplosion = Instantiate(deathParticleEffect, gameObject.transform.position, Quaternion.Euler(0, 0, Random.Range(0, 360)));
+            GameObject BloodExplosion = Instantiate(bloodExplosionEffect, gameObject.transform.position, Quaternion.Euler(0, 0, Random.Range(0, 360)));
             Destroy(BloodExplosion, 1f);
             damageScreenUI.SetActive(false);
 

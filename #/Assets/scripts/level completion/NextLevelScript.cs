@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using TMPro.Examples;
 using UnityEngine;
@@ -6,17 +8,24 @@ using UnityEngine.UI;
 
 public class NextLevelScript : MonoBehaviour
 {
+    [Header("gameObjects")]
     public GameObject interactText;
     public GameObject pauseMenu_gameManager;
     public GameObject levelCompleteUi;
 
-    //'serializedfield' means that these are still private, but are now accessable in the editor >> removed the variables, but still good to know
+    public GameObject hud;
+
+    [Header("animation/s")]
+    public Animator anim;
+    public bool levelCompleted;
+
+    //'serializedfield' means that variable is still private, but is now accessable in the editor >> removed the serialized variable, but still good to know
 
     public void Awake()
     {
-        pauseMenu_gameManager = GameObject.Find("game manager");
+        anim = gameObject.GetComponentInChildren<Animator>();
 
-        gameObject.SetActive(false);
+        pauseMenu_gameManager = GameObject.Find("game manager");
 
         //pressInteractText = GameObject.Find("finish level button");
         interactText.GetComponent<TextMeshPro>().enabled = false;
@@ -26,6 +35,7 @@ public class NextLevelScript : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        gameObject.SetActive(false);
         levelCompleteUi.SetActive(false);
 
         //FindAnyObjectByType<AudioManager>().Play("_enemies are dead");
@@ -34,7 +44,7 @@ public class NextLevelScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        anim.SetBool("level complete", levelCompleted);
     }
 
     public void OnTriggerStay2D(Collider2D collision)
@@ -45,16 +55,29 @@ public class NextLevelScript : MonoBehaviour
         if (collision.gameObject.tag == "Player" && Input.GetKey(KeyCode.E))
         {
             //InteractToWin();
+            levelCompleted = true;
 
             collision.gameObject.GetComponent<PlayerControllerScript>().enabled = false;
             collision.gameObject.GetComponent<PlayerShootingScript>().enabled = false;
+            collision.gameObject.SetActive(false);
+
+            //hud.SetActive(false);
 
             //SOMEWAY TO SHOW THAT THE PLAYER HAS MADE PROGRESS
 
             pauseMenu_gameManager.GetComponent<PauseMenuScript>().enabled = false;
 
-            levelCompleteUi.SetActive(true);
+            StartCoroutine(drive());
         }
+    }
+
+
+    IEnumerator drive()
+    {
+        levelCompleted = true;
+        yield return new WaitForSeconds(2f);
+        hud.SetActive(false);
+        levelCompleteUi.SetActive(true);
     }
 
     /*

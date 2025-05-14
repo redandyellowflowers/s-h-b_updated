@@ -6,10 +6,14 @@ using UnityEngine;
 
 public class IntroScript : MonoBehaviour
 {
+    [Header("player")]
     public GameObject player;
+
+    [Header("animation/s")]
     public Animator anim;
     bool intro;
 
+    [Header("text")]
     public TextMeshProUGUI dialogueText;
     public GameObject introUi;
     public TextMeshProUGUI pressToContinue;
@@ -76,7 +80,7 @@ public class IntroScript : MonoBehaviour
         foreach (char character in sentences[index].ToCharArray())
         {
             dialogueText.text += character;
-            FindAnyObjectByType<AudioManager>().PlayForButton("typing");//REFERENCING AUDIO MANAGER
+            FindAnyObjectByType<AudioManager>().PlayForButton("typing");
             yield return new WaitForSeconds(dialogueSpeed);
 
             isDoneTalking = false;
@@ -87,14 +91,16 @@ public class IntroScript : MonoBehaviour
         index++;
     }
 
+    /*
     public void SkipButton()
     {
         StartCoroutine(DisableUi());
     }
+    */
 
     IEnumerator DisableUi()
     {
-        FindAnyObjectByType<AudioManager>().PlayForButton("click_backward");//REFERENCING AUDIO MANAGER
+        FindAnyObjectByType<AudioManager>().PlayForButton("click_backward");
 
         dialogueText.text = npcName + "<br>" + "<br>" + "";
         index = 0;
@@ -108,7 +114,7 @@ public class IntroScript : MonoBehaviour
 
         introUi.SetActive(false);
         gameObject.GetComponent<IntroScript>().enabled = false;
-        FindAnyObjectByType<AudioManager>().Stop("typing");//REFERENCING AUDIO MANAGER
+        FindAnyObjectByType<AudioManager>().Stop("typing");
         player.GetComponent<PlayerControllerScript>().enabled = true;
         player.GetComponent<PlayerShootingScript>().enabled = true;
     }

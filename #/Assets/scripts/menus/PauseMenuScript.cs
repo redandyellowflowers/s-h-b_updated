@@ -3,16 +3,23 @@ using UnityEngine.SceneManagement;
 
 public class PauseMenuScript : MonoBehaviour
 {
-    public GameObject pauseUI;
-
+    [Header("player")]
     public GameObject player;
 
+    [Header("gameObjects")]
+    public GameObject pauseUI;
+
     private bool gameIsPaused = false;
+
+    private void Awake()
+    {
+        player = GameObject.FindGameObjectWithTag("Player");
+    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
+        
     }
 
     // Update is called once per frame

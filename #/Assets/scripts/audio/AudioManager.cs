@@ -12,6 +12,7 @@ public class AudioManager : MonoBehaviour
     Code version: 1
     Availability: https://www.youtube.com/watch?v=6OT43pvUyfY&t=620s
     */
+
     public bool isStartMenu;
 
     public Sound[] sounds;//the [] allows for lists
@@ -21,6 +22,7 @@ public class AudioManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()//same as start method, exept "its called before"?
     {
+        /*
         if (instance == null)//if the audiomanager already exists in the next scene, its deleted so there arent 2 at any one time
             instance = this;
         else
@@ -28,8 +30,9 @@ public class AudioManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-
-            //DontDestroyOnLoad(gameObject);//remains even if you have a scene transition, could be used for the player too
+        */
+        
+        DontDestroyOnLoad(gameObject);//remains even if you have a scene transition, could be used for the player too
 
         foreach (Sound s in sounds)
         {

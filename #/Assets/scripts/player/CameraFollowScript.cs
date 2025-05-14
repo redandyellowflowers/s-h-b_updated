@@ -10,10 +10,12 @@ public class CameraFollowScript : MonoBehaviour
     Availability: https://www.youtube.com/watch?v=FXqwunFQuao
      */
 
+    [Header("player")]
+    public GameObject player;
+
+    [Header("values")]
     public float followSpeed = 2f;
     public float yOffset = 1f;
-
-    public GameObject player;
 
     void Start()
     {

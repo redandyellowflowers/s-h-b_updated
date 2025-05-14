@@ -2,7 +2,10 @@ using UnityEngine;
 
 public class OutOfBoundsScript : MonoBehaviour
 {
+    [Header("player")]
     public GameObject player;
+
+    [Header("gameObjects")]
     public OutOfBoundsScript outOfBounds;
 
     [TextArea(2, 4)]
@@ -16,12 +19,17 @@ public class OutOfBoundsScript : MonoBehaviour
 
     Vector2 playerPos;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player");
 
         outOfBounds = gameObject.GetComponent<OutOfBoundsScript>();
+    }
+
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Start()
+    {
+
     }
 
     public void FixedUpdate()

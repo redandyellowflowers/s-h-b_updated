@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class AmmoPickUpScript : MonoBehaviour
 {
+    [Header("stats")]
     public int ammo = 5;
 
+    [Header("gameObjects")]
     public GameObject interactText;
 
     private void Awake()
@@ -17,8 +19,7 @@ public class AmmoPickUpScript : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        interactText.GetComponent<TextMeshPro>().enabled = false;
-        interactText.GetComponent<TextMeshPro>().GetComponent<VertexJitter>().enabled = false;
+
     }
 
     // Update is called once per frame
